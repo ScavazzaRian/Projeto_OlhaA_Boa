@@ -8,12 +8,13 @@ using namespace std;
 
 struct numeroBingo
 {
-    // Nem tinha necessidade de uma struct pra isso, mas fazer oq
+    // Nem tinha necessidade de uma struct pra isso, mas eu deixei por padrão. Antes eu tinha dois campos um bool e o valor. Porém o valor já pode atuar como verficador, já que toda vez que tiro um número eu substituo o valor dele por 0.
     int valor;
 };
 
 struct cartelaBingo
 {
+    //Acredito que devido lógica tive dificuldade em exebir o comando LINHA, dos requisitos.
     numeroBingo B[5], I[5], N[5], G[5], O[5];
 };
 
