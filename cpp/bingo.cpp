@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #define MAX_CARTELA 10
 
 using namespace std;
@@ -20,6 +21,7 @@ int gerarAleatorio(int min, int max);
 void preencheCartelaBingo(numeroBingo *vetor, int min, int max);
 void marcaNumCartela(cartelaBingo *cartelaBingo, int num);
 void exibiCartelaBingo(cartelaBingo *cartelaBingo);
+void salvaCartela(cartelaBingo *cartelaBingo, int qtde);
 
 int main()
 {
@@ -105,6 +107,11 @@ int main()
                     exibiCartelaBingo(&cartelas[i]);
                 }
 
+                for (int i = 0; i < quantidadeCartelas; i++)
+                {
+                    salvaCartela(&cartelas[i], i);
+                }
+
                 if (numeroSorteado == 0)
                     jogoTerminado = true;
             }
@@ -187,33 +194,11 @@ void marcaNumCartela(cartelaBingo *cartelaBingo, int num)
 void exibiCartelaBingo(cartelaBingo *cartelaBingo)
 {
     // Também acho que daria pra deixar isso aqui bem mais simples, mas fazer oq
-
     bool colunaCompleta_B = true;
     bool colunaCompleta_I = true;
     bool colunaCompleta_N = true;
     bool colunaCompleta_G = true;
     bool colunaCompleta_O = true;
-
-    bool linhaCompleta_1 = true;
-    bool linhaCompleta_2 = true;
-
-    for (int i = 0; i < 5; i++)
-    {
-        if (i == 1)
-        {
-            if (cartelaBingo->B[1].valor != 0 || cartelaBingo->I[1].valor != 0 || cartelaBingo->N[1].valor || cartelaBingo->G[1].valor || cartelaBingo->O[1].valor)
-            {
-                linhaCompleta_1 = false;
-            }
-        }
-        if (i == 2)
-        {
-            if (cartelaBingo->B[2].valor != 0 || cartelaBingo->I[2].valor != 0 || cartelaBingo->N[2].valor || cartelaBingo->G[2].valor || cartelaBingo->O[2].valor)
-            {
-                linhaCompleta_1 = false;
-            }
-        }
-    }
 
     for (int i = 0; i < 5; i++)
     {
@@ -228,11 +213,6 @@ void exibiCartelaBingo(cartelaBingo *cartelaBingo)
         if (cartelaBingo->O[i].valor != 0)
             colunaCompleta_O = false;
     }
-
-    if (linhaCompleta_1 == true)
-        cout << "LINHA 1 COMPLETA!" << endl;
-    if (linhaCompleta_2 == true)
-        cout << "LINHA 1 COMPLETA!" << endl;        
 
     if (colunaCompleta_B == true)
         cout << "COLUNA B COMPLETA!" << endl;
@@ -264,5 +244,42 @@ void exibiCartelaBingo(cartelaBingo *cartelaBingo)
                  << cartelaBingo->G[i].valor << "\t"
                  << cartelaBingo->O[i].valor << endl;
         }
+    }
+}
+
+void salvaCartela(cartelaBingo *cartelaBingo, int qtde)
+{
+
+    string qtdeCartelas = "cartela" + to_string(qtde + 1) + ".txt";
+
+    ofstream arquivo(qtdeCartelas);
+
+    if (arquivo.is_open())
+    {
+        arquivo << "Cartela " << qtde + 1 << ":\n";
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == 2)
+            {
+                arquivo << cartelaBingo->B[i].valor << "\t"
+                        << cartelaBingo->I[i].valor << "\t"
+                        << "FREE" << "\t"
+                        << cartelaBingo->G[i].valor << "\t"
+                        << cartelaBingo->O[i].valor << endl;
+            }
+            else
+            {
+                arquivo << cartelaBingo->B[i].valor << "\t"
+                        << cartelaBingo->I[i].valor << "\t"
+                        << cartelaBingo->N[i].valor << "\t"
+                        << cartelaBingo->G[i].valor << "\t"
+                        << cartelaBingo->O[i].valor << endl;
+            }
+        }
+        arquivo.close();
+    }
+    else
+    {
+        cout << "Erro ao abrir o arquivo para a cartela " << qtde + 1 << endl;
     }
 }
