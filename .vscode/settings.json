@@ -3,5 +3,6 @@
         "*.embeddedhtml": "html",
         "iostream": "cpp",
         "ostream": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "C:\\MinGW\\bin\\g++.exe"
 }
