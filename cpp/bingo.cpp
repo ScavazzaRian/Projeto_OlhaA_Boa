@@ -22,6 +22,7 @@ void preencheCartelaBingo(numeroBingo *vetor, int min, int max);
 void marcaNumCartela(cartelaBingo *cartelaBingo, int num);
 void exibiCartelaBingo(cartelaBingo *cartelaBingo);
 void salvaCartela(cartelaBingo *cartelaBingo, int qtde);
+bool bingoo(cartelaBingo *cartelaBingo);
 
 int main()
 {
@@ -110,6 +111,14 @@ int main()
                 for (int i = 0; i < quantidadeCartelas; i++)
                 {
                     salvaCartela(&cartelas[i], i);
+                }
+
+                for (int i = 0; i < quantidadeCartelas; i++)
+                {
+                    if (bingoo(&cartelas[i]))
+                    {
+                        jogoTerminado = true;
+                    }
                 }
 
                 if (numeroSorteado == 0)
@@ -249,9 +258,8 @@ void exibiCartelaBingo(cartelaBingo *cartelaBingo)
 
 void salvaCartela(cartelaBingo *cartelaBingo, int qtde)
 {
-
+    // Precisei criar uma variavel por receber o nome de cada arquivo para que fosse dinamico de acordo com a quantidade
     string qtdeCartelas = "cartela" + to_string(qtde + 1) + ".txt";
-
     ofstream arquivo(qtdeCartelas);
 
     if (arquivo.is_open())
@@ -282,4 +290,21 @@ void salvaCartela(cartelaBingo *cartelaBingo, int qtde)
     {
         cout << "Erro ao abrir o arquivo para a cartela " << qtde + 1 << endl;
     }
+}
+
+bool bingoo(cartelaBingo *cartelaBingo)
+{
+    bool bingoo = true;
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (cartelaBingo->B[i].valor != 0 || cartelaBingo->I[i].valor != 0 ||
+            cartelaBingo->N[i].valor != 0 || cartelaBingo->G[i].valor != 0 ||
+            cartelaBingo->O[i].valor != 0)
+        {
+            return false;
+        }
+    }
+    cout << "BINGOOOO!!!" << endl;
+    return true;
 }
