@@ -260,7 +260,7 @@ void exibiCartelaBingo(cartelaBingo *cartelaBingo)
 void salvaCartela(cartelaBingo *cartelaBingo, int qtde)
 {
     // Precisei criar uma variavel por receber o nome de cada arquivo para que fosse dinamico de acordo com a quantidade
-    string qtdeCartelas = "cartela" + to_string(qtde + 1) + ".txt";
+    string qtdeCartelas = "cartela_" + to_string(qtde + 1) + ".txt";
     ofstream arquivo(qtdeCartelas);
 
     if (arquivo.is_open())
